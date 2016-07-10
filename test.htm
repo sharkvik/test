@@ -2,6 +2,7 @@
 <html ng-app="testEditor">
     <head>
         <meta charset="utf-8">
+
         <script src="./script/jquery-3.0.0.min.js"></script>
 
         <script src="./script/angular.min.js"></script>
@@ -9,19 +10,87 @@
 
         <script src="./script/ckeditor/ckeditor.js"></script>
         <script src="./script/ckeditor/adapter.jquery.js"></script>
+
+        <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
     </head>
     <body ng-controller="testEditorController">
         <div class="page-header">
             <h1>Отредактируй меня</h1>
         </div>
+        <div id="map" style="width: 600px; height: 400px"></div>
         <div class="panel">
             <form method="get">
                 <textarea id="texteditor" ng-keyup="update()">
-                    ldkfskdlfskdl
+
                 </textarea>
             </form>
         </div>
         <div ng-bind-html="text"></div>
         <script src="./script/testEditor.js"></script>
+        <script type="text/javascript">
+            ymaps.ready(init);
+            var myMap;
+            var data = {
+                "type": "FeatureCollection",
+                "features": [
+                    {
+                        "type": "Feature",
+                        "id": 0,
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [59.964585, 30.314978]
+                        },
+                        "properties": {
+                            "balloonContent": "Содержимое балуна",
+                            "clusterCaption": "Метка 1",
+                            "hintContent": "Текст подсказки"
+                        }
+                    },
+                    {
+                        "type": "Feature",
+                        "id": 1,
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [59.964586, 30.314980]
+                        },
+                        "properties": {
+                            "balloonContent": "Содержимое балуна",
+                            "clusterCaption": "Метка 2",
+                            "hintContent": "Текст подсказки"
+                        }
+                    }
+                    ,
+                    {
+                        "type": "Feature",
+                        "id": 2,
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [60.0, 30.314980]
+                        },
+                        "properties": {
+                            "balloonContent": "Содержимое балуна",
+                            "clusterCaption": "Метка 3",
+                            "hintContent": "Текст подсказки"
+                        }
+                    }
+                ]
+            };
+            function init(){
+                myMap = new ymaps.Map("map", {
+                    center: [59.964584, 30.314979],
+                    zoom: 15
+                });
+               // var myPlacemark = new ymaps.Placemark([59.964584, 30.314979], { hintContent: 'Работа!', balloonContent: 'Опять работа' });
+                //myMap.geoObjects.add(myPlacemark);
+                var objectManager = new ymaps.ObjectManager({
+                    // Использовать кластеризацию.
+                    clusterize: true
+                });
+                objectManager.add(data);
+                objectManager.objects.setObjectOptions('preset', 'islands#greenDotIcon');
+               // objectManager.clusters.options.setClusterOptions('preset', 'islands#greenClusterIcons');
+                myMap.geoObjects.add(objectManager);
+            }
+        </script>
     </body>
 </html>

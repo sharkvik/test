@@ -1,8 +1,14 @@
 <!doctype html>
-<html ng-app="testTestEditor">
+<html ng-app="testEditor">
     <head>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <script src="./script/jquery-3.0.0.min.js"></script>
+
+        <script src="./script/angular.min.js"></script>
+        <script src="./script/angular-sanitize.min.js"></script>
+
+        <script src="./script/ckeditor/ckeditor.js"></script>
+        <script src="./script/ckeditor/adapter.jquery.js"></script>
     </head>
     <body ng-controller="testEditorController">
         <div class="page-header">
@@ -16,28 +22,6 @@
             </form>
         </div>
         <div ng-bind-html="text"></div>
-
-        <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
-
-        <script src="./script/angular.min.js"></script>
-        <script src="./script/angular-sanitize.min.js"></script>
-
-        <script src="./script/ckeditor/ckeditor.js"></script>
-        <script src="./script/ckeditor/adapter.jquery.js"></script>
-        <script>
-            $("#texteditor").ckeditor();
-            var purchaseApp = angular.module("testTestEditor", ["ngSanitize"]);
-            purchaseApp.controller("testEditorController",
-            function ($scope) {
-                var editor = $('#texteditor').ckeditorGet();
-                $scope.text = editor.getData();
-                $scope.update = function(){
-                    $scope.text = editor.getData();
-                }
-                editor.on( 'change', function(){
-                    $('#texteditor').keyup();
-                } )
-            });
-        </script>
+        <script src="./script/testEditor.js"></script>
     </body>
 </html>

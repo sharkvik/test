@@ -17,41 +17,24 @@
             </form>
         </div>
         <div ng-bind-html="text"></div>
-        <div class="panel">
-            <form method="get">
-                <textarea id="texteditor1" ng-keyup="update()">
-                    ldkfskdlfskdldssdfsdf
-                </textarea>
-            </form>
-        </div>
-        <div ng-bind-html="text1"></div>
 
         <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
-        <script src="./ckeditor/ckeditor.js"></script>
-        <script src="./ckeditor/adapters/jquery.js"></script>
-        <script src="./cleditor/jquery.cleditor.min.js"></script>
+
         <script src="./script/angular.min.js"></script>
         <script src="./script/angular-sanitize.min.js"></script>
+
+        <script src="./ckeditor/ckeditor.js"></script>
+        <script src="./ckeditor/adapters/jquery.js"></script>
         <script>
             $("#texteditor").ckeditor();
-            var $editor = $("#texteditor1").cleditor()[0];
-
-
             var purchaseApp = angular.module("testTestEditor", ["ngSanitize"]);
             purchaseApp.controller("testEditorController",
             function ($scope) {
-               // $scope.text = $('#texteditor').text();
-                $scope.text1 = $('#texteditor1').text();
                 var editor = $('#texteditor').ckeditorGet();
-                debugger;
                 $scope.text = editor.getData();
                 $scope.update = function(){
-                    $scope.text1 = $( 'body', $editor.$main[0].lastChild.contentDocument ).html();
                     $scope.text = editor.getData();
                 }
-                $editor.change(function(){
-                    $('#texteditor1').keyup();
-                })
                 editor.on( 'change', function(){
                     $('#texteditor').keyup();
                 } )

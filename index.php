@@ -13,26 +13,22 @@
         <?this.add_refferences();?>
     </head>
     <body ng-controller="testEditorController">
-            <div>
-                <div class="page-header">
-                    <h1>Найди меня</h1>
-                </div>
-                <div id="map" style="width: 600px; height: 400px"></div>
-            </div>
-            <div>
-                <div class="panel">
-                    <div class="page-header">
-                        <h1>Отредактируй меня</h1>
-                    </div>
-                    <form method="get">
-                        <textarea id="texteditor" ng-keyup="update()"></textarea>
-                        <input type="submit">
-                    </form>
-                </div>
-                <div ng-bind-html="text"></div>
-            </div>
-        <script src="./script/testEditor.js"></script>
-        <script src="./script/yaMap.js"></script>
+        <ul>
+            <li>
+                <label>
+                    <input type="radio" name="mode" value="0" ng-model="mode"/>
+                    Карта
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="radio" name="mode" value="1" ng-model="mode"/>
+                    Редактор
+                </label>
+            </li>
+        </ul>
+        <div ng-include="loadContent()" onload="init()"></div>
+        <script src="./script/index.js"></script>
     </body>
 </html>
 <?

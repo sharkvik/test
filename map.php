@@ -14,5 +14,5 @@
     <div data-point data-x="59.984585" data-y="30.314978" data-name="Метрка 3" data-text="Описание третьей метки" data-title="Метка 3"></div>
     <div data-point data-x="59.994585" data-y="30.314978" data-name="Метрка 4" data-text="Описание четвертой метки" data-title="Метка 4"></div>
 </div>
-<script src="./script/yandexMapCover.js"></script>
+<script src="script/framework/yandexMapCover.js"></script>
 <script src="script/map.js"></script>

@@ -2,15 +2,19 @@
     var controller = {
         scope:null,
         editor:null,
-        initialized: null,
-        $textEditor: null,
+        textEditor: null,
 
         root: function( $scope )
         {
             this.scope = $scope;
-            this.$textEditor = $("#texteditor");
-            this.$textEditor.ckeditor( $.proxy( this.initEditorActions, this) );
-            this.initialized = true;
+            this.textEditor = angular.element( document.querySelector('#texteditor'));
+            var self = this;
+            var editorInit = this.initEditorActions;
+            CKEDITOR.replace( 'texteditor', {
+                on: {
+                    instanceReady : function(ev){ self.initEditorActions(ev, self); }
+                }
+            } );
         },
 
         getText: function()
@@ -23,14 +27,17 @@
 
         updateText: function () {
             this.scope.text = this.getText();
+            debugger;
         },
 
-        initEditorActions: function(){
-            this.editor = this.$textEditor.ckeditorGet();
-            this.scope.update = $.proxy( this.updateText, this );
-            this.editor.on( 'change', $.proxy( function(){
-                this.$textEditor.keyup();
-            }, this ) );
+        initEditorActions: function( ev, self ){
+            debugger;
+            self.editor = self.textEditor.ckeditorGet();
+
+            var updateFunc = self.updateText;
+            debugger;
+            self.scope.update = function(){ updateFunc(); };
+            self.editor.on( 'change', self.textEditor.keyup );
         }
     };
     $( document ).on( 'content-loaded', function( ev, $scope ){

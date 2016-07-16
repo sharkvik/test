@@ -5,7 +5,7 @@
     var purchaseApp = angular.module("testEditor", ["ngSanitize"]);
     purchaseApp.controller("testEditorController",
         function ($scope) {
-            $scope.mode = 1;
+            $scope.mode=$('input[type="hidden"]').val();
             $scope.loadContent = function(){
                 if( $scope.mode == 1 )
                     return 'editor.php';

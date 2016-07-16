@@ -13,6 +13,7 @@
         <?this.add_refferences();?>
     </head>
     <body ng-controller="testEditorController">
+        <input type="hidden" ng-model="mode" value="<?echo $_GET['mode']?>" />
         <ul>
             <li>
                 <label>

@@ -9,10 +9,10 @@
     <div class="page-header">
         <h1>Отредактируй меня</h1>
     </div>
-    <form method="get">
-        <textarea id="texteditor" ng-keyup="update()"></textarea>
+    <form method="get" action="/?mode=1">
+        <textarea id="texteditor" ng-keyup="update()" name="text"></textarea>
         <input type="submit">
     </form>
 </div>
 <div ng-bind-html="text"></div>
-<script src="./script/testEditor.js"></script>
+<script src="script/editor.js"></script>

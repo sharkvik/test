@@ -4,7 +4,7 @@
 (function($){
     $.yandexMap = function( $item, points ){
         var settings = $item.data();
-        var center = [settings.centerX || 59.964584, settings.centerY || 30.314979];
+        var center = [settings.centerX || 59.98, settings.centerY || 30.314979];
         this.zoom = settings.zoom || 15;
         this.center = center;
         this.points = points || [];
@@ -81,7 +81,6 @@
                 title: data.title
             });
         } );
-        debugger;
         return new $.yandexMap( $item, points );
     };
 })(jQuery);

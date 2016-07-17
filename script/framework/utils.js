@@ -3,9 +3,9 @@
  */
 (function(){
     utils = {};
-    utils.proxy = function( f, context ){
+    utils.proxy = function( f, context, args ){
         return function(){
-            f.apply( context, arguments );
+            f.apply( context, (args || arguments), arguments );
         }
     };
 })();

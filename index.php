@@ -31,7 +31,7 @@
         <div ng-include="loadContent()" onload="init()"></div>
         <script src="./script/index.js"></script>
     </body>
-</html>
+</html>s
 <?
 
 function add_refferences()
@@ -41,7 +41,8 @@ function add_refferences()
         <script src="script/framework/angular.min.js"></script>
         <script src="script/framework/angular-sanitize.min.js"></script>
         <script src="script/framework/ckeditor/ckeditor.js"></script>
-        <script src="script/framework/ckeditor/adapter.jquery.js"></script>
+        <!--<script src="script/framework/ckeditor/adapter.jquery.js"></script>-->
+
         <script src="script/framework/utils.js"></script>
         <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
     <?

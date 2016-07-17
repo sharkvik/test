@@ -15,4 +15,3 @@
     </form>
 </div>
 <div ng-bind-html="text"></div>
-<script src="script/editor.js"></script>

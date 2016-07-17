@@ -10,15 +10,15 @@
             scope:null,
             editor:null,
             textEditor: null,
+            test: 'this',
 
             root: function( $scope, $document )
             {
                 this.scope = $scope;
-                this.textEditor = $document.find('#texteditor');
-                var self = this;
+                this.textEditor = angular.element( document.querySelector('#texteditor'));
                 CKEDITOR.replace( this.textEditor[0], {
                     on: {
-                        instanceReady : function(ev){ self.initEditorActions(ev, self); }
+                        instanceReady : utils.proxy( this.initEditorActions, this )
                     }
                 } );
             },
@@ -31,26 +31,25 @@
                 return '';
             },
 
-            updateText: function ( self ) {
-                self.scope.text = self.getText();
+            updateText: function () {
+                this.scope.text = this.getText();
             },
 
-            initEditorActions: function( ev, self ){
-                self.editor = ev.editor;
-                var updateFunc = self.updateText;
-                self.scope.update = function(){
-                    updateFunc(self);
-                };
-                self.editor.on( 'change', function(){
-                    self.textEditor.keyup();
-                } );
+            initEditorActions: function( ev ){
+                this.editor = ev.editor;
+                this.scope.update = utils.proxy( this.updateText, this );
+                this.editor.on( 'change', utils.proxy( this.textEditorKeyUp, this ) );
+            },
+
+            textEditorKeyUp: function(){
+                this.textEditor.triggerHandler('keyup');
             }
         };
     });
 
     purchaseApp.controller("EditorController",
         function EditorController($scope, $document, editorService) {
-            $scope.mode=$document.find('input[type="hidden"]').val();
+            $scope.mode = angular.element( document.querySelector('input[type="hidden"]')).val();
             $scope.loadContent = function(){
                 if( $scope.mode == 1 )
                     return 'editor.php';
@@ -59,7 +58,8 @@
             };
             $scope.init = function()
             {
-                editorService.root( $scope, $document );
+                if( $scope.mode == 1 )
+                    editorService.root( $scope, $document );
             }
         });
 })();

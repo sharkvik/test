@@ -2,7 +2,8 @@
  * Created by Viktor on 17.07.2016.
  */
 (function(){
-    var editorServiceObj = {
+    var editorServiceObj = function(){};
+    editorServiceObj.prototype = {
         scope:null,
         editor:null,
         textEditor: null,
@@ -12,23 +13,17 @@
             this.scope = $scope;
             if( typeof item === "string" )
             {
-                this.textEditor = $document.find( item );
+                this.textEditor = angular.element( document.querySelector(item));
             }
             else
             {
                 this.textEditor = item;
             }
-            var self = this;
             CKEDITOR.replace( this.textEditor[0], {
                 on: {
-                    instanceReady : this.onReady
+                    instanceReady : utils.proxy( this.initEditorActions, this )
                 }
             } );
-        },
-
-        onReady: function( callback, context, args )
-        {
-            callback.apply( context, args );
         },
 
         getText: function()
@@ -39,20 +34,19 @@
             return '';
         },
 
-        updateText: function ( self ) {
-            self.scope.text = self.getText();
+        updateText: function () {
+            this.scope.text = this.getText();
         },
 
-        initEditorActions: function( ev, self ){
-            self.editor = ev.editor;
-            var updateFunc = self.updateText;
-            self.scope.update = function(){
-                updateFunc(self);
-            };
-            self.editor.on( 'change', function(){
-                self.textEditor.keyup();
-            } );
+        initEditorActions: function( ev ){
+            this.editor = ev.editor;
+            this.scope.update = utils.proxy( this.updateText, this );
+            this.editor.on( 'change', utils.proxy( this.textEditorKeyUp, this ) );
+        },
+
+        textEditorKeyUp: function(){
+            this.textEditor.triggerHandler('keyup');
         }
     };
-    app.factory( 'editorService', function(){ return editorServiceObj; });
+    app.factory( 'editorService', function(){ return new editorServiceObj(); });
 })();

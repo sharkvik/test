@@ -1,19 +1,34 @@
-(function($){
-    var controller = {
+/**
+ * Created by Viktor on 17.07.2016.
+ */
+(function(){
+    var editorServiceObj = {
         scope:null,
         editor:null,
         textEditor: null,
 
-        root: function( $scope, $document )
+        init: function( item, $scope, $document )
         {
             this.scope = $scope;
-            this.textEditor = $document.find('#texteditor');
+            if( typeof item === "string" )
+            {
+                this.textEditor = $document.find( item );
+            }
+            else
+            {
+                this.textEditor = item;
+            }
             var self = this;
             CKEDITOR.replace( this.textEditor[0], {
                 on: {
-                    instanceReady : function(ev){ self.initEditorActions(ev, self); }
+                    instanceReady : this.onReady
                 }
             } );
+        },
+
+        onReady: function( callback, context, args )
+        {
+            callback.apply( context, args );
         },
 
         getText: function()
@@ -39,7 +54,5 @@
             } );
         }
     };
-    $( document ).on( 'content-loaded', function( ev, obj ){
-        controller.root( obj.$scope, obj.$document );
-    } )
-})(jQuery);
+    app.factory( 'editorService', function(){ return editorServiceObj; });
+})();

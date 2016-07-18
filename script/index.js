@@ -61,7 +61,13 @@
                 if( $scope.mode == 1 )
                     editorService.root( $scope, $document );
                 else{
-                    
+                    var pointObjs = angular.element( '*[data-point]' );
+                    var points = [];
+                    pointObjs.each( function( index, item ){
+                        var data= item.data();
+                        var dataItem = {};
+                        console.log( data );
+                    } );
                 }
             }
         });

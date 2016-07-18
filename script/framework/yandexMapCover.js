@@ -2,7 +2,7 @@
  * Created by Viktor on 16.07.2016.
  */
 (function($){
-    $.yandexMap = function( $item, points ){
+    utils.yandexMap = function( $item, points ){
         var settings = $item.data();
         var center = [settings.centerX || 59.98, settings.centerY || 30.314979];
         this.zoom = settings.zoom || 15;
@@ -12,7 +12,7 @@
         this.init();
     };
 
-    $.yandexMap.prototype = {
+    utils.yandexMap.prototype = {
         center: null,
         zoom: null,
         points: null,
@@ -68,8 +68,8 @@
         }
     };
 
-    $.fn.yandexMap = function(){
-        var $item = $( this );
+    utils.yandexMap = function( item ){
+        var $item = $( item );
         var $pointObjects = $( '*[data-point]', $item );
         var points = [];
         $pointObjects.each( function( index, item ){

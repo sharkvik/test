@@ -41,7 +41,7 @@
                 this.editor.on( 'change', utils.proxy( this.textEditorKeyUp, this ) );
             },
 
-            textEditorKeyUp: function(){
+            textEditorKeyUp: function() {
                 this.textEditor.triggerHandler('keyup');
             }
         };
@@ -60,6 +60,9 @@
             {
                 if( $scope.mode == 1 )
                     editorService.root( $scope, $document );
+                else{
+                    
+                }
             }
         });
 })();

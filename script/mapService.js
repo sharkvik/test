@@ -22,38 +22,26 @@
                 this.root = item;
             }
             this.points = this.getPoints();
-            this.zoom = 15;
-            this.center = [59.98, 30.314979];
+            this.zoom = parseInt( this.root.data('zoom') || "15" );
+            this.center = [parseFloat( this.root.data('center_x') || "59.98" ), parseFloat( this.root.data('center_y') || "30.314979" )];
             ymaps.ready( utils.proxy( this.build, this ) );
         },
 
         getPoints: function()
         {
-            var pointObjs = angular.element( '*[data-point]' );
+            var pointObjs = angular.element( document.querySelectorAll( '*[data-point]' ) );
             var points = [];
-            pointObjs.each( function( index, item ){
-                var attrs= item.attributes;
-                var dataItem = {};
-                for( var i = 0; i<attrs.length; i++ )
-                {
-                    if(attrs[i].name == 'data-x')
-                        dataItem.x = attrs[i].value;
-                    if(attrs[i].name == 'data-y')
-                        dataItem.y = attrs[i].value;
-                    if(attrs[i].name == 'data-name')
-                        dataItem.name = attrs[i].value;
-                    if(attrs[i].name == 'data-text')
-                        dataItem.text = attrs[i].value;
-                    if(attrs[i].name == 'data-title')
-                        dataItem.title = attrs[i].value;
-                }
+            for( var i = 0; i<pointObjs.length; i++ )
+            {
+                var item = pointObjs[i];
+                var point = item.data().point;
                 points.push({
-                    coordinates: [dataItem.x, dataItem.y],
-                    name: dataItem.name,
-                    text: dataItem.text,
-                    title: dataItem.title
+                    coordinates: [point.x, point.y],
+                    name: point.name,
+                    text: point.text,
+                    title: point.title
                 });
-            } );
+            }
             return points;
         },
 
@@ -61,7 +49,7 @@
         {
             if( !this.root.attr( 'id' ) )
             {
-                this.root.attr( 'id', 'map' + (new Date()) );
+                this.root.attr( 'id', 'map' + (new Date()).getMilliseconds() );
             }
             var myMap = new ymaps.Map(this.root.attr('id'), {
                 center: this.center,
@@ -81,7 +69,7 @@
             };
 
             var count = this.points.length;
-            this.points.forEach( function( index, item ){
+            this.points.forEach( function( item, index ){
                 data.features.push(
                     {
                         "type": "Feature",

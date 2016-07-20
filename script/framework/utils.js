@@ -25,8 +25,12 @@
         return name;
     };
 
-    HTMLElement.prototype.data = function()
+    HTMLElement.prototype.data = function( key )
     {
+        if(key)
+        {
+            return this.getAttribute('data-'+key);
+        }
         var dataItems = [];
         var dataObj = {};
         for( var i = 0; i<this.attributes.length; i++ )

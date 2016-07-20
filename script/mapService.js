@@ -22,8 +22,9 @@
                 this.root = item;
             }
             this.points = this.getPoints();
-            this.zoom = parseInt( this.root.data('zoom') || "15" );
-            this.center = [parseFloat( this.root.data('center_x') || "59.98" ), parseFloat( this.root.data('center_y') || "30.314979" )];
+            this.zoom = parseInt( this.root[0].data().zoom || "15" );
+            debugger;
+            this.center = [parseFloat( this.root[0].data('center_x') || "59.98" ), parseFloat( this.root[0].data('center_x') || "30.314979" )];
             ymaps.ready( utils.proxy( this.build, this ) );
         },
 

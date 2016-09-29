@@ -5,7 +5,7 @@
     app.controller("RootController", rootControllerInit );
 
     function rootControllerInit( $scope, $document ) {
-        $scope.mode=angular.element( document.querySelector('input[type="hidden"]')).val();
+        $scope.mode=angular.element( document.querySelector('input[type="hidden"]')).val() || 0;
         $scope.loadContent = function(){
             if( $scope.mode == 1 )
                 return 'editor.php';
